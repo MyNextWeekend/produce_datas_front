@@ -11,14 +11,15 @@ export function login(data) {
 export function getInfo(token) {
   return request({
     url: '/user/info',
-    method: 'get',
-    params: { token }
+    method: 'post',
+    headers:{"token":token}
   })
 }
 
-export function logout() {
+export function logout(token) {
   return request({
     url: '/user/logout',
-    method: 'post'
+    method: 'post',
+    headers:{"token":token}
   })
 }
