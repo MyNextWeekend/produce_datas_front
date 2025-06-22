@@ -5,7 +5,6 @@ Vue.use(Router)
 
 import Layout from '@/layout'
 
-
 // 固定路由，不需要权限
 export const constantRoutes = [
   // {
@@ -51,32 +50,117 @@ export const constantRoutes = [
 // 动态路由
 export const asyncRoutes = [
   {
-    path: '/student',
+    path: '/tool',
     component: Layout,
     redirect: '/student/list',
     alwaysShow: true, // will always show the root menu
-    name: '学生',
+    name: '实用工具',
     meta: {
-      title: '学生',
+      title: '实用工具',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
         path: 'list',
-        component: () => import('@/views/student/list'),
+        component: () => import('@/views/tool/list'),
         name: 'StudentList',
         meta: {
-          title: '学生列表',
+          title: '工具001',
+          icon: 'edit',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
         path: 'info',
-        component: () => import('@/views/student/info'),
+        component: () => import('@/views/tool/info'),
         name: 'StudentInfo',
         meta: {
-          title: '学生详情'
+          title: '工具002'
+        }
+      }
+    ]
+  },
+  {
+    path: '/settings',
+    component: Layout,
+    redirect: '/settings/api',
+    alwaysShow: true, // will always show the root menu
+    name: '设置',
+    meta: {
+      title: '设置',
+      icon: 'el-icon-setting',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'api',
+        component: () => import('@/views/settings/api'),
+        name: 'StudentList',
+        meta: {
+          title: '接口设置',
+          icon: 'el-icon-sunny',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'parameter',
+        component: () => import('@/views/settings/parameter'),
+        name: 'StudentInfo',
+        meta: {
+          title: '参数设置',
+          icon: 'el-icon-sugar'
+        }
+      },
+      {
+        path: 'database',
+        component: () => import('@/views/settings/database'),
+        name: 'StudentInfo',
+        meta: {
+          title: '数据库配置',
+          icon: 'el-icon-sunny'
+        }
+      }
+    ]
+  },
+  {
+    path: '/task',
+    component: Layout,
+    redirect: '/task/case',
+    alwaysShow: true, // will always show the root menu
+    name: '任务',
+    meta: {
+      title: '任务',
+      icon: 'el-icon-wind-power',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'case',
+        component: () => import('@/views/task/case'),
+        name: 'StudentList',
+        meta: {
+          title: '用例信息',
+          icon: 'el-icon-crop',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'history',
+        component: () => import('@/views/task/history'),
+        name: 'StudentInfo',
+        meta: {
+          title: '执行记录',
+          icon: 'el-icon-monitor'
+        }
+      },
+      {
+        path: 'report',
+        component: () => import('@/views/task/report'),
+        name: 'StudentInfo',
+        meta: {
+          title: '执行报告',
+          icon: 'el-icon-tickets'
         }
       }
     ]
