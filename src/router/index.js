@@ -64,7 +64,7 @@ export const asyncRoutes = [
       {
         path: 'list',
         component: () => import('@/views/tool/list'),
-        name: 'StudentList',
+        name: 'ToolList',
         meta: {
           title: '工具001',
           icon: 'edit',
@@ -74,7 +74,7 @@ export const asyncRoutes = [
       {
         path: 'info',
         component: () => import('@/views/tool/info'),
-        name: 'StudentInfo',
+        name: 'ToolInfo',
         meta: {
           title: '工具002'
         }
@@ -96,7 +96,7 @@ export const asyncRoutes = [
       {
         path: 'api',
         component: () => import('@/views/settings/api'),
-        name: 'StudentList',
+        name: 'SettingApi',
         meta: {
           title: '接口设置',
           icon: 'el-icon-sunny',
@@ -106,7 +106,7 @@ export const asyncRoutes = [
       {
         path: 'parameter',
         component: () => import('@/views/settings/parameter'),
-        name: 'StudentInfo',
+        name: 'SettingParameter',
         meta: {
           title: '参数设置',
           icon: 'el-icon-sugar'
@@ -115,7 +115,7 @@ export const asyncRoutes = [
       {
         path: 'database',
         component: () => import('@/views/settings/database'),
-        name: 'StudentInfo',
+        name: 'SettingDatabase',
         meta: {
           title: '数据库配置',
           icon: 'el-icon-sunny'
@@ -138,7 +138,7 @@ export const asyncRoutes = [
       {
         path: 'case',
         component: () => import('@/views/task/case'),
-        name: 'StudentList',
+        name: 'TaskCase',
         meta: {
           title: '用例信息',
           icon: 'el-icon-crop',
@@ -148,7 +148,7 @@ export const asyncRoutes = [
       {
         path: 'history',
         component: () => import('@/views/task/history'),
-        name: 'StudentInfo',
+        name: 'TaskHistory',
         meta: {
           title: '执行记录',
           icon: 'el-icon-monitor'
@@ -157,7 +157,7 @@ export const asyncRoutes = [
       {
         path: 'report',
         component: () => import('@/views/task/report'),
-        name: 'StudentInfo',
+        name: 'TaskReport',
         meta: {
           title: '执行报告',
           icon: 'el-icon-tickets'
