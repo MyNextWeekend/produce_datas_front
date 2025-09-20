@@ -89,15 +89,6 @@
       </div>
     </el-dialog>
 
-    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确认</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -141,7 +132,6 @@ export default {
         update: '修改',
         create: '新增'
       },
-      dialogPvVisible: false,
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
         title: [{ required: true, message: 'title is required', trigger: 'blur' }]
@@ -210,8 +200,11 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          // 删除空字符串和 null
+          this.temp = Object.fromEntries(
+            Object.entries(this.temp).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
+          );
           ParameterAdd(this.temp).then(() => {
-            this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
@@ -236,11 +229,12 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
+          // 删除空字符串和 null
+          this.temp = Object.fromEntries(
+            Object.entries(this.temp).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
+          );
           // tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          ParameterUpdate(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
+          ParameterUpdate(this.temp).then(() => {
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
@@ -248,6 +242,8 @@ export default {
               type: 'success',
               duration: 2000
             })
+            // 重新查询最新的结果显示
+            this.getList()
           })
         }
       })
