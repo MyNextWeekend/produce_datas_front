@@ -10,7 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   // 开始进度条
   NProgress.start()
 
@@ -23,7 +23,8 @@ router.beforeEach(async (to, from, next) => {
   if (hasToken) {
     if (to.path === '/login') {
       // 如果用户已登录，重定向到主页
-      next({ path: '/' })
+      console.log('已经有token了,跳转到首页')
+      next({ path: '/documentation' })
       NProgress.done()
     } else {
       // 确定用户是否已通过getInfo获得其权限角色
@@ -61,6 +62,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       // 其他没有访问权限的页面将被重定向到登录页面。
+      console.log('没有token,跳转到登录页')
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }

@@ -7,17 +7,6 @@ import Layout from '@/layout'
 
 // 固定路由，不需要权限
 export const constantRoutes = [
-  // {
-  //   path: '/redirect',
-  //   component: Layout,
-  //   hidden: true,
-  //   children: [
-  //     {
-  //       path: '/redirect/:path(.*)',
-  //       component: () => import('@/views/redirect/index')
-  //     }
-  //   ]
-  // },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -36,13 +25,13 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
     hidden: true
   },
   {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
+    path: '/404',
+    component: () => import('@/views/error-page/404'),
     hidden: true
   }
 ]
@@ -169,6 +158,7 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
