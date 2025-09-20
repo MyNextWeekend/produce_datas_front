@@ -10,7 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // 开始进度条
   NProgress.start()
 
@@ -24,7 +24,7 @@ router.beforeEach(async(to, from, next) => {
     if (to.path === '/login') {
       // 如果用户已登录，重定向到主页
       next({ path: '/' })
-      NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
+      NProgress.done()
     } else {
       // 确定用户是否已通过getInfo获得其权限角色
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
@@ -42,7 +42,7 @@ router.beforeEach(async(to, from, next) => {
           router.addRoutes(accessRoutes)
 
           // hack方法确保addRoutes完整
-          //设置replace:true，这样导航就不会留下历史记录
+          // 设置replace:true，这样导航就不会留下历史记录
           next({ ...to, replace: true })
         } catch (error) {
           // 删除令牌并转到登录页面重新登录

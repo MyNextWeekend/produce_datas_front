@@ -24,6 +24,18 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/documentation',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/documentation/index'),
+        name: '文档',
+        meta: { title: '文档', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  {
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
@@ -32,18 +44,6 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/error-page/401'),
     hidden: true
-  },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: '文档',
-        meta: { title: '文档', icon: 'documentation', affix: true }
-      }
-    ]
   }
 ]
 
@@ -52,7 +52,7 @@ export const asyncRoutes = [
   {
     path: '/tool',
     component: Layout,
-    redirect: '/student/list',
+    // redirect: '/student/list',
     alwaysShow: true, // will always show the root menu
     name: '实用工具',
     meta: {
