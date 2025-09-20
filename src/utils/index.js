@@ -3,6 +3,17 @@
  */
 
 /**
+ * 删除空字符串和 null
+ * @param {Any} obj
+ * @returns {Any}
+ */
+export function cleanObject(obj) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
+  );
+}
+
+/**
  * Parse the time to string
  * @param {(Object|string|number)} time
  * @param {string} cFormat
@@ -45,7 +56,7 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -254,7 +265,7 @@ export function getTime(type) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function() {
+  const later = function () {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -271,7 +282,7 @@ export function debounce(func, wait, immediate) {
     }
   }
 
-  return function(...args) {
+  return function (...args) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout

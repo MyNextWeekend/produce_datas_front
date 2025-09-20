@@ -95,9 +95,8 @@
 <script>
 import { ParameterAdd, ParameterDelete, ParameterUpdate, ParameterQuery, ParameterStatistic, ParameterInfo } from '@/api/parameter'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
+import { parseTime, cleanObject } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-
 
 export default {
   name: 'ParameterTable',
@@ -146,9 +145,7 @@ export default {
     getList() {
       this.listLoading = true
       // 删除空字符串和 null
-      this.listQuery.filter = Object.fromEntries(
-        Object.entries(this.listQuery.filter).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
-      );
+      this.listQuery.filter = cleanObject(this.listQuery.filter);
       // 查询数据
       ParameterQuery(this.listQuery).then(response => {
         this.list = response.data
@@ -201,9 +198,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           // 删除空字符串和 null
-          this.temp = Object.fromEntries(
-            Object.entries(this.temp).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
-          );
+          this.temp = cleanObject(this.temp);
           ParameterAdd(this.temp).then(() => {
             this.dialogFormVisible = false
             this.$notify({
@@ -230,9 +225,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           // 删除空字符串和 null
-          this.temp = Object.fromEntries(
-            Object.entries(this.temp).filter(([_, v]) => v !== '' && v !== null && v !== undefined)
-          );
+          this.temp =cleanObject(this.temp);
           // tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           ParameterUpdate(this.temp).then(() => {
             this.dialogFormVisible = false
