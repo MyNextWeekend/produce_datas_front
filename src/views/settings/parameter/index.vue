@@ -129,10 +129,10 @@ export default {
       },
 
       temp: {
-        id: undefined,
-        keyName: '',
-        value: '',
-        description: ''
+        id: null,
+        keyName: null,
+        value: null,
+        description: null
       },
 
       dialogFormVisible: false,
@@ -165,7 +165,7 @@ export default {
       })
       // 查询总数
       ParameterStatistic(this.listQuery).then(response => {
-        this.total = response.data[0]
+        this.total = response.data.total
       })
       this.listLoading = false
     },
@@ -193,10 +193,10 @@ export default {
     },
     resetTemp() {
       this.temp = {
-        id: undefined,
-        keyName: '',
-        value: '',
-        description: ''
+        id: null,
+        keyName: null,
+        value: null,
+        description: null
       }
     },
     handleCreate() {
