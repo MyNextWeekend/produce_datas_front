@@ -1,49 +1,49 @@
 import request from '@/utils/request'
 
-export function ParameterAdd(query) {
+export function ParameterAdd(data) {
   return request({
     url: '/parameter/add',
     method: 'post',
-    data: query
+    data: data
   })
 }
 
-export function ParameterDelete(query) {
+export function ParameterDelete(data) {
   return request({
     url: '/parameter/delete',
     method: 'post',
-    data: query
+    data: data
   })
 }
 
-export function ParameterUpdate(query) {
+export function ParameterUpdate(data) {
   return request({
     url: '/parameter/update',
     method: 'post',
-    data: query
+    data: data
   })
 }
 
-export function ParameterQuery(query) {
+export function ParameterQuery(data) {
   return request({
     url: '/parameter/query',
     method: 'post',
-    data: query
+    data: data
   })
 }
 
-export function ParameterStatistic(query) {
+export function ParameterStatistic(data) {
   return request({
     url: '/parameter/statistic',
     method: 'post',
-    data: query
+    data: data
   })
 }
 
-export function ParameterInfo(query) {
+export function ParameterInfo(data) {
   return request({
     url: '/parameter/info',
     method: 'post',
-    data: query
+    data: data
   })
 }
