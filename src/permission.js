@@ -21,7 +21,7 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken) {
-    if (to.path === '/login') {
+    if (to.path === '/login' || to.path === '/') {
       // 如果用户已登录，重定向到主页
       console.log('已经有token了,跳转到首页')
       next({ path: '/documentation' })
