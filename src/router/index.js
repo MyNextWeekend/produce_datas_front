@@ -102,11 +102,11 @@ export const asyncRoutes = [
         }
       },
       {
-        path: 'database',
-        component: () => import('@/views/settings/database'),
-        name: 'SettingDatabase',
+        path: 'user',
+        component: () => import('@/views/settings/user'),
+        name: 'SettingUser',
         meta: {
-          title: '数据库配置',
+          title: '用户管理',
           icon: 'el-icon-sunny'
         }
       }
