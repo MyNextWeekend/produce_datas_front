@@ -83,9 +83,9 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'api',
-        component: () => import('@/views/settings/api'),
-        name: 'SettingApi',
+        path: 'endpoint',
+        component: () => import('@/views/settings/endpoint'),
+        name: 'SettingEndpoint',
         meta: {
           title: '接口设置',
           icon: 'el-icon-sunny',

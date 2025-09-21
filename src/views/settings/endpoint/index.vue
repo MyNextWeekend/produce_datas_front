@@ -1,9 +1,9 @@
 <template>
     <div class="app-container">
         <div class="filter-container">
-            <el-input v-model="listQuery.filter.username" placeholder="账号" style="width: 200px;" class="filter-item"
+            <el-input v-model="listQuery.filter.name" placeholder="名称" style="width: 200px;" class="filter-item"
                 @keyup.enter.native="handleFilter" />
-            <el-input v-model="listQuery.filter.email" placeholder="邮箱" style="width: 200px;" class="filter-item"
+            <el-input v-model="listQuery.filter.method" placeholder="方法" style="width: 200px;" class="filter-item"
                 @keyup.enter.native="handleFilter" />
             <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
                 查询
@@ -25,24 +25,34 @@
                     <span>{{ row.id }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="账号" align="center" prop="key_name" sortable="custom">
+            <el-table-column label="名称" align="center" prop="key_name" sortable="custom">
                 <template slot-scope="{row}">
-                    <span>{{ row.username }}</span>
+                    <span>{{ row.name }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="密码" align="center">
+            <el-table-column label="编码" align="center">
                 <template slot-scope="{row}">
-                    <span>{{ row.password }}</span>
+                    <span>{{ row.code }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="邮箱" align="center">
+            <el-table-column label="方法" align="center">
                 <template slot-scope="{row}">
-                    <span>{{ row.email }}</span>
+                    <span>{{ row.method }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="角色" align="center">
+            <el-table-column label="环境信息" align="center">
                 <template slot-scope="{row}">
-                    <span>{{ row.role }}</span>
+                    <span>{{ row.domainCode }}</span>
+                </template>
+            </el-table-column>
+             <el-table-column label="路径" align="center">
+                <template slot-scope="{row}">
+                    <span>{{ row.path }}</span>
+                </template>
+            </el-table-column>
+             <el-table-column label="描述" align="center">
+                <template slot-scope="{row}">
+                    <span>{{ row.description }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="是否启用" align="center">
@@ -79,17 +89,26 @@
         <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
             <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px"
                 style="width: 400px; margin-left:50px;">
-                <el-form-item label="账号" prop="keyName">
-                    <el-input v-model="temp.username" />
+                <el-form-item label="名称" prop="keyName">
+                    <el-input v-model="temp.name" />
                 </el-form-item>
-                <el-form-item label="密码" prop="value">
-                    <el-input v-model="temp.password" />
+                <el-form-item label="编码" prop="value">
+                    <el-input v-model="temp.code" />
                 </el-form-item>
-                <el-form-item label="邮箱">
-                    <el-input v-model="temp.email"  />
+                <el-form-item label="方法">
+                    <el-input v-model="temp.method" />
                 </el-form-item>
-                <el-form-item label="角色">
-                    <el-input v-model="temp.role"  type="number"/>
+                <el-form-item label="环境信息">
+                    <el-input v-model="temp.domainCode"  />
+                </el-form-item>
+                <el-form-item label="路径">
+                    <el-input v-model="temp.path"  />
+                </el-form-item>
+                <el-form-item label="描述">
+                    <el-input v-model="temp.description"  />
+                </el-form-item>
+                <el-form-item label="是否启用">
+                    <el-input v-model="temp.isActive"  />
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -106,13 +125,13 @@
 </template>
 
 <script>
-import { UserAdd, UserDelete, UserUpdate, UserQuery, UserStatistic, UserInfo } from '@/api/user'
+import { EndpointAdd, EndpointDelete, EndpointUpdate, EndpointQuery, EndpointStatistic, EndpointInfo } from '@/api/endpoint'
 import waves from '@/directive/waves' // waves directive
 import { parseTime, cleanObject } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
-    name: 'UserTable',
+    name: 'EndpointTable',
     components: { Pagination },
     directives: { waves },
     data() {
@@ -125,10 +144,12 @@ export default {
                 pageSize: 20,
                 filter: {
                     id: null,
-                    username: null,
-                    password: null,
-                    email: null,
-                    role: null,
+                    name: null,
+                    code: null,
+                    method: null,
+                    domainCode: null,
+                    path: null,
+                    description: null,
                     isActive: null,
                 },
                 sortOrder: "asc",
@@ -137,10 +158,12 @@ export default {
 
             temp: {
                 id: null,
-                username: null,
-                password: null,
-                email: null,
-                role: null,
+                name: null,
+                code: null,
+                method: null,
+                domainCode: null,
+                path: null,
+                description: null,
                 isActive: null,
             },
 
@@ -166,11 +189,11 @@ export default {
             // 删除空字符串和 null
             this.listQuery.filter = cleanObject(this.listQuery.filter);
             // 查询数据
-            UserQuery(this.listQuery).then(response => {
+            EndpointQuery(this.listQuery).then(response => {
                 this.list = response.data
             })
             // 查询总数
-            UserStatistic(this.listQuery).then(response => {
+            EndpointStatistic(this.listQuery).then(response => {
                 this.total = response.data.total
             })
             this.listLoading = false
@@ -200,10 +223,12 @@ export default {
         resetTemp() {
             this.temp = {
                 id: null,
-                username: null,
-                password: null,
-                email: null,
-                role: null,
+                name: null,
+                code: null,
+                method: null,
+                domainCode: null,
+                path: null,
+                description: null,
                 isActive: null,
             }
         },
@@ -220,7 +245,7 @@ export default {
                 if (valid) {
                     // 删除空字符串和 null
                     this.temp = cleanObject(this.temp);
-                    UserAdd(this.temp).then(() => {
+                    EndpointAdd(this.temp).then(() => {
                         this.dialogFormVisible = false
                         this.$notify({
                             title: 'Success',
@@ -248,7 +273,7 @@ export default {
                     // 删除空字符串和 null
                     this.temp = cleanObject(this.temp);
                     // tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-                    UserUpdate(this.temp).then(() => {
+                    EndpointUpdate(this.temp).then(() => {
                         this.dialogFormVisible = false
                         this.$notify({
                             title: 'Success',
@@ -277,7 +302,7 @@ export default {
                     if (action === 'confirm') {
                         instance.confirmButtonLoading = true;
                         instance.confirmButtonText = '执行中...';
-                        UserDelete({ id: row.id }).then(() => {
+                        EndpointDelete({ id: row.id }).then(() => {
                             instance.confirmButtonLoading = false;
                             done();
                             this.$notify({
