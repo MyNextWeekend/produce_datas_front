@@ -49,8 +49,8 @@ watch(visible, (value) => {
       <router-link v-for="(item, index) in menuStore.tagsViewList" :key="item.fullPath" :to="{ path: item.fullPath }"
         class="tags-view-item" :class="isActive(item) ? 'active' : ''" @contextmenu.prevent="openMenu($event, index)">
         {{ item.title }}
-        <SvgIcon iconClass="close" className="close" v-show="!isActive(item)"
-          @click.prevent.stop="menuStore.removeTagView(index, 'index')"></SvgIcon>
+        <SvgIcon iconClass="close" className="close" @click.prevent.stop="menuStore.removeTagView(index, 'index')">
+        </SvgIcon>
       </router-link>
     </el-scrollbar>
     <context-menum v-show="visible" :style="floatMenu" :index="selectIndex" class="contextmenu"></context-menum>
@@ -94,18 +94,12 @@ watch(visible, (value) => {
         background-color: #42b983;
         color: #fff;
         border-color: #42b983;
-
-        &::before {
-          content: '';
-          background: #fff;
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          position: relative;
-          margin-right: 2px;
-        }
       }
+    }
+
+    .close {
+      width: 7px;
+      margin-left: 5px;
     }
   }
 

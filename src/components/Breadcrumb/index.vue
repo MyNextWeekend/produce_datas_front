@@ -35,9 +35,9 @@ function handleLink(item) {
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item, index) in levelList" :key="item.path">
-        <span v-if="index == levelList.length - 1" class="no-redirect">{{
-          item.title
-          }}</span>
+        <span v-if="index == levelList.length - 1" class="no-redirect">
+          {{ item.title }}
+        </span>
         <a v-else @click.prevent="handleLink(item)">{{ item.title }}</a>
       </el-breadcrumb-item>
     </transition-group>

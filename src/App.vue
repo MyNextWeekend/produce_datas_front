@@ -30,6 +30,5 @@ import { RouterView } from "vue-router";
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
 }
 </style>
