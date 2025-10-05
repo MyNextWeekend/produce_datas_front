@@ -7,9 +7,7 @@ import { getToken } from '@/utils/auth.js' // get token from cookie
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-
 const whiteList = ['/login', '/auth-redirect'] // 白名单
-
 
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
@@ -17,7 +15,7 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start()
 
   // 设置页面的title
-  document.title = "xxxxxxx"
+  document.title = to.meta.title || '高大上'
 
   // 从 Cookies 获取用户的token
   const hasToken = getToken()
@@ -41,7 +39,7 @@ router.beforeEach(async (to, from, next) => {
           const accessRoutes = userStore.generateRoutes()
 
           // 动态添加路由
-          accessRoutes.forEach(route => {
+          accessRoutes.forEach((route) => {
             router.addRoute(route)
           })
 

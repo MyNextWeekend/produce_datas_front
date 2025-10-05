@@ -3,7 +3,7 @@
 import SidebarItem from './SidebarItem.vue'
 import { useUserStore } from '@/stores/user'
 import { useMenuStore } from '@/stores/menu'
-import logo from '@/assets/vue.svg'
+import logo from '@/assets/favicon.svg'
 import { computed } from 'vue'
 
 const userStore = useUserStore()

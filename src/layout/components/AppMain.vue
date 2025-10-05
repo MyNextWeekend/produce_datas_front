@@ -25,12 +25,12 @@
 .app-main {
   /* 占满剩余高度 */
   flex: 1;
-  min-height: calc(100vh - 50px); // 减去 navbar 高度
+  min-height: calc(100vh - 84px); // 减去 navbar 高度
   width: 100%;
   position: relative;
   overflow: auto;
   background: #f0f2f5;
-  padding: 10px;
+  padding: 5px;
   box-sizing: border-box;
 
   section {
@@ -38,7 +38,7 @@
     height: 100%;
     background: #fff;
     border-radius: 8px;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
   }
