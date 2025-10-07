@@ -16,7 +16,7 @@ export const publicRoutes = [
       {
         path: '/dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '首页', icon: 'wallet' },
+        meta: { title: '首页', icon: 'dashboard' },
       },
     ],
   },
@@ -36,17 +36,17 @@ export const privateRoutes = [
     path: '/news',
     component: Layout,
     redirect: '/news/dashboard',
-    meta: { title: '首页', icon: 'wallet' },
+    meta: { title: '实用工具', icon: 'computer' },
     children: [
       {
         path: '/news/dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '大盘', icon: 'user', roles: ['admin'] },
+        meta: { title: '工具001', icon: 'lighting', roles: ['admin'] },
       },
       {
         path: '/news/user',
         component: () => import('@/views/user/index.vue'),
-        meta: { title: '用户', icon: 'user' },
+        meta: { title: '工具002', icon: 'game' },
       },
     ],
   },
@@ -54,17 +54,17 @@ export const privateRoutes = [
     path: '/summer',
     component: Layout,
     redirect: '/summer/summer',
-    meta: { title: '凭证处理', icon: 'more' },
+    meta: { title: '设置', icon: 'setting' },
     children: [
       {
         path: '/summer/summer',
         component: () => import('@/views/summer/index.vue'),
-        meta: { title: '凭证', icon: 'game' },
+        meta: { title: '用户信息', icon: 'user' },
       },
       {
         path: '/summer/user',
         component: () => import('@/views/user/index.vue'),
-        meta: { title: '用户', icon: 'document' },
+        meta: { title: '个人中心', icon: 'document' },
       },
     ],
   },
