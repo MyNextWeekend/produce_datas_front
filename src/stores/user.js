@@ -12,7 +12,7 @@ function hasPermission(roles, route) {
   if (route.meta && route.meta?.roles) {
     return roles.some((role) => route.meta.roles?.includes(role))
   } else {
-    return true
+    return false
   }
 }
 
@@ -100,9 +100,8 @@ const useUserStore = defineStore('user', {
       } else {
         accessedRoutes = filterAsyncRoutes(privateRoutes, this.roles)
       }
-      accessedRoutes = publicRoutes.concat(accessedRoutes)
       // 去掉路由中的多余信息，只保留 path/meta/children
-      this.routes = extractRouteData(accessedRoutes)
+      this.routes = extractRouteData(publicRoutes.concat(accessedRoutes))
       return accessedRoutes
     },
   },

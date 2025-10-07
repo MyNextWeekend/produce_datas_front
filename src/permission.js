@@ -29,10 +29,11 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // 确定用户是否已通过getInfo获得其权限角色
       const hasRoles = userStore.roles && userStore.roles.length > 0
+      console.log('hasRoles', hasRoles, 'to', to, 'router', router.getRoutes())
       if (!hasRoles) {
         try {
           // 获取用户信息
-          userStore.getInfo()
+          await userStore.getInfo()
           // 基于角色生成可访菜单
           const accessRoutes = userStore.generateRoutes()
 
@@ -40,6 +41,8 @@ router.beforeEach(async (to, from, next) => {
           accessRoutes.forEach((route) => {
             router.addRoute(route)
           })
+          // 重新跳转一次当前路径
+          next({ ...to, replace: true })
         } catch (error) {
           console.log('路由守卫异常:', error)
           // 删除令牌并转到登录页面重新登录
@@ -51,8 +54,9 @@ router.beforeEach(async (to, from, next) => {
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }
+      } else {
+        next()
       }
-      next()
     }
   } else {
     // 没有 token 且 访问白名单中的页面

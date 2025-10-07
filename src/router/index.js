@@ -41,7 +41,7 @@ export const privateRoutes = [
       {
         path: '/news/dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '大盘', icon: 'user' },
+        meta: { title: '大盘', icon: 'user', roles: ['admin'] },
       },
       {
         path: '/news/user',
@@ -68,7 +68,7 @@ export const privateRoutes = [
       },
     ],
   },
-  { path: '/:pathMatch(.*)*', redirect: '/404', hidden: true },
+  { path: '/:pathMatch(.*)*', redirect: '/404' },
 ]
 
 // 初始化路由只有公开路由
