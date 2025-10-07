@@ -1,4 +1,4 @@
-import router from './router'
+import router from './router/index.js'
 import { useUserStore } from './stores/user'
 import { ElNotification } from 'element-plus'
 import NProgress from 'nprogress' // progress bar
@@ -21,17 +21,15 @@ router.beforeEach(async (to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken) {
-    if (to.path === '/login' || to.path === '/') {
+    if (to.path === '/login') {
       // 如果用户已登录，重定向到主页
       console.log('已经有token了,跳转到首页')
-      next({ path: '/news/dashboard' })
+      next({ path: '/' })
       NProgress.done()
     } else {
       // 确定用户是否已通过getInfo获得其权限角色
       const hasRoles = userStore.roles && userStore.roles.length > 0
-      if (hasRoles) {
-        next()
-      } else {
+      if (!hasRoles) {
         try {
           // 获取用户信息
           userStore.getInfo()
@@ -42,10 +40,8 @@ router.beforeEach(async (to, from, next) => {
           accessRoutes.forEach((route) => {
             router.addRoute(route)
           })
-
-          // 设置replace:true，这样导航就不会留下历史记录
-          next({ ...to, replace: true })
         } catch (error) {
+          console.log('路由守卫异常:', error)
           // 删除令牌并转到登录页面重新登录
           userStore.logout()
           ElNotification({
@@ -56,6 +52,7 @@ router.beforeEach(async (to, from, next) => {
           NProgress.done()
         }
       }
+      next()
     }
   } else {
     // 没有 token 且 访问白名单中的页面

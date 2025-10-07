@@ -9,7 +9,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const userStore = useUserStore()
 
-async function login() {
+async function handleLogin() {
   try {
     await userStore.login({
       username: username.value,
@@ -35,7 +35,7 @@ async function login() {
         <div class="form-item">
           <input id="password" v-model="password" type="password" placeholder="密码" />
         </div>
-        <button @click="login">登录</button>
+        <button @click="handleLogin">登录</button>
       </div>
     </div>
   </div>

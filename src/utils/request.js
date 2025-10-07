@@ -1,19 +1,19 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { ElNotification } from 'element-plus'
+import { getToken } from '@/utils/auth.js'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: 'http://127.0.0.1:8080/api', // url = base url + request url
   timeout: 5000, // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   (config) => {
-    if (store.getters.token) {
-      config.headers['token'] = getToken()
+    const token = getToken()
+    if (token) {
+      config.headers['token'] = token
     }
     return config
   },
@@ -28,27 +28,10 @@ service.interceptors.response.use(
     const res = response.data
 
     if (res.code !== 0) {
-      Message({
+      ElNotification({
         message: res.message || 'Error',
         type: 'error',
-        duration: 5 * 1000,
       })
-
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        MessageBox.confirm(
-          'You have been logged out, you can cancel to stay on this page, or log in again',
-          'Confirm logout',
-          {
-            confirmButtonText: 'Re-Login',
-            cancelButtonText: 'Cancel',
-            type: 'warning',
-          },
-        ).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
-      }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res
@@ -56,10 +39,9 @@ service.interceptors.response.use(
   },
   (error) => {
     console.log('err' + error) // for debug
-    Message({
+    ElNotification({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000,
     })
     return Promise.reject(error)
   },
