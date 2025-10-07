@@ -1,15 +1,33 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-
 import Layout from '@/layout/index.vue'
-
 
 // 公开的路由
 export const publicRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
-  }
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: '/dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
+        meta: { title: '首页', icon: 'wallet' },
+      },
+    ],
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/errorPage/401.vue'),
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/errorPage/404.vue'),
+  },
 ]
 
 // 私有的路由
@@ -23,14 +41,14 @@ export const privateRoutes = [
       {
         path: '/news/dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '大盘', icon: 'user' }
+        meta: { title: '大盘', icon: 'user' },
       },
       {
         path: '/news/user',
         component: () => import('@/views/user/index.vue'),
-        meta: { title: '用户', icon: 'user' }
-      }
-    ]
+        meta: { title: '用户', icon: 'user' },
+      },
+    ],
   },
   {
     path: '/summer',
@@ -41,22 +59,24 @@ export const privateRoutes = [
       {
         path: '/summer/summer',
         component: () => import('@/views/summer/index.vue'),
-        meta: { title: '凭证', icon: 'game' }
+        meta: { title: '凭证', icon: 'game' },
       },
       {
         path: '/summer/user',
         component: () => import('@/views/user/index.vue'),
-        meta: { title: '用户', icon: 'document' }
-      }
-    ]
-  }
+        meta: { title: '用户', icon: 'document' },
+      },
+    ],
+  },
+  { path: '/:pathMatch(.*)*', redirect: '/404', hidden: true },
 ]
 
 // 初始化路由只有公开路由
-const create = () => createRouter({
-  history: createWebHistory(),
-  routes: publicRoutes
-})
+const create = () =>
+  createRouter({
+    history: createWebHistory(),
+    routes: publicRoutes,
+  })
 
 const router = create()
 
