@@ -4,9 +4,10 @@ let username = ref('admin')
 let password = ref('admin')
 
 import { useUserStore } from '@/stores/user.js'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 const userStore = useUserStore()
 
 async function handleLogin() {
@@ -15,8 +16,7 @@ async function handleLogin() {
       username: username.value,
       password: password.value
     })
-    console.log('登录成功')
-    router.push({ path: '/' })
+    router.push({ path: route.query.redirect || '/' })
   } catch (err) {
     console.error('登录失败', err)
   }

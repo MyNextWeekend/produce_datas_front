@@ -29,7 +29,6 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // 确定用户是否已通过getInfo获得其权限角色
       const hasRoles = userStore.roles && userStore.roles.length > 0
-      console.log('hasRoles', hasRoles, 'to', to, 'router', router.getRoutes())
       if (!hasRoles) {
         try {
           // 获取用户信息
@@ -51,7 +50,7 @@ router.beforeEach(async (to, from, next) => {
             message: error || '异常，请重新登录',
             type: 'error',
           })
-          next(`/login?redirect=${to.path}`)
+          next({ path: '/login', query: { redirect: to.fullPath } })
           NProgress.done()
         }
       } else {
